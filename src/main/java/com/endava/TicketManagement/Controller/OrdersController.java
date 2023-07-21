@@ -7,7 +7,6 @@ import com.endava.TicketManagement.Service.TicketCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -25,19 +24,25 @@ public class OrdersController {
         return ordersService.findAllByCustomerID(customerID);
     }
 
-    @PostMapping("/createOrder")
-    public Orders createEvent(@RequestBody OrderDTO orderDTO) {
-        Orders orders = new Orders();
-        orders.setOrderID(9);
+    @GetMapping("/allOrders")
+    public List<Orders> getAllOrders(){
+        return ordersService.findAllOrders();
+    }
 
-        TicketCategory ticketCategory = ticketCategoryService.findById(orderDTO.getTicketCategoryID());
-        Event event = eventService.findByEventID(orderDTO.getEventID());
-        int totalPrice = orderDTO.getNumberOfTickets() * ticketCategory.getPrice();
-        ticketCategory.setEvent(event);
-        orders.setTotalPrice(totalPrice);
-        orders.setTicketCategory(ticketCategory);
-        orders.setNumberOfTickets(orderDTO.getNumberOfTickets());
-        orders.setOrderedAt(java.sql.Date.valueOf(LocalDate.now()));
-        return ordersService.create(orders);
+    @GetMapping("/order/{resourceId}")
+    public Orders getOrders(@PathVariable Long resourceId){
+        return ordersService.findByOrderID(resourceId);
+    }
+
+    @GetMapping("/ordersDTO")
+    public List<OrderDTO> getOrdersDTORequiredResponseFormat(){
+        List<OrderDTO> returnedOrdersDTO = ordersService.getOrdersDTORequiredResponseFormat();
+        return returnedOrdersDTO;
+    }
+
+    @PostMapping("/createOrder")
+    public OrderDTO createOrder(@RequestBody OrderDTO orderDTO) {
+        orderDTO  = ordersService.createOrder(orderDTO);
+        return orderDTO;
     }
 }
