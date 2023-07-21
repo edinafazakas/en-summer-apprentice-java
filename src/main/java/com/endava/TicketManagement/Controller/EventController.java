@@ -34,8 +34,7 @@ public class EventController {
     public List<EventDTO> getEventsByVenueIDAndEventTypeDTORequiredResponseFormat(
             @RequestParam("venueID") Integer venueID,
             @RequestParam("eventType") String eventType) {
-        List<EventDTO> returnedEventsDTO = eventService.getEventsByVenueIDAndEventTypeDTORequiredResponseFormat(venueID, eventType);
-        return returnedEventsDTO;
+        return eventService.getEventsByVenueIDAndEventTypeDTORequiredResponseFormat(venueID, eventType);
     }
 
 }

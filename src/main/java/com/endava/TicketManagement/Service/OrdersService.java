@@ -48,7 +48,7 @@ public class OrdersService {
         for(Orders orders: ordersByCustomerID){
             OrderDTO orderDTO = new OrderDTO();
             orderDTO.setEventID(Long.valueOf(orders.getTicketCategory().getEvent().getEventID()));
-            orderDTO.setTimestamp(java.sql.Date.valueOf(LocalDate.now()));
+            orderDTO.setTimestamp(orders.getOrderedAt());
             orderDTO.setTicketCategoryID(Long.valueOf(orders.getTicketCategory().getTicketCategoryID()));
             orderDTO.setNumberOfTickets(orders.getNumberOfTickets());
             orderDTO.setTotalPrice(orders.getTotalPrice());
