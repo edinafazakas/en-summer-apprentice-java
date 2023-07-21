@@ -5,6 +5,8 @@ import com.endava.TicketManagement.Repository.TicketCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TicketCategoryService {
     @Autowired
@@ -12,6 +14,10 @@ public class TicketCategoryService {
 
     public TicketCategory findById(Long ticketCategoryID){
         return ticketCategoryRepository.findByTicketCategoryID(ticketCategoryID);
+    }
+
+    public List<TicketCategory> FindAllByEventID(Long eventID){
+        return ticketCategoryRepository.findAllByEvent_EventID(eventID);
     }
 
 

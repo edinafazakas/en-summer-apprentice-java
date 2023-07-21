@@ -1,6 +1,7 @@
 package com.endava.TicketManagement.Model;
 
 import jakarta.persistence.*;
+
 import java.util.Date;
 
 @Entity
@@ -87,6 +88,7 @@ public class Event {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
 
     @Override
     public String toString() {

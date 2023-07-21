@@ -1,10 +1,14 @@
 package com.endava.TicketManagement.Model;
 
+import java.util.Date;
+
 public class OrderDTO {
 
     private Long eventID;
     private Long ticketCategoryID;
     private int numberOfTickets;
+    private Date timestamp;
+    private int totalPrice;
 
     public OrderDTO(){
 
@@ -32,5 +36,21 @@ public class OrderDTO {
 
     public void setNumberOfTickets(int numberOfTickets) {
         this.numberOfTickets = numberOfTickets;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
