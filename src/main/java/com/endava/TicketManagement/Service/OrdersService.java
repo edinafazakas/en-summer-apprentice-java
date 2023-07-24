@@ -1,18 +1,19 @@
 package com.endava.TicketManagement.Service;
 
-import com.endava.TicketManagement.Model.Event;
-import com.endava.TicketManagement.Model.OrderDTO;
-import com.endava.TicketManagement.Model.Orders;
-import com.endava.TicketManagement.Model.TicketCategory;
+import com.endava.TicketManagement.Model.*;
+import com.endava.TicketManagement.Repository.CustomerRepository;
 import com.endava.TicketManagement.Repository.EventRepository;
 import com.endava.TicketManagement.Repository.OrdersRepository;
 import com.endava.TicketManagement.Repository.TicketCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 public class OrdersService {
@@ -22,30 +23,38 @@ public class OrdersService {
     private TicketCategoryRepository ticketCategoryRepository;
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
 
     public Orders create(Orders order) {
         return ordersRepository.save(order);
     }
 
-    public List<Orders> findAllByCustomerID(Long customerID){
+    public List<Orders> findAllByCustomerID(Long customerID) {
         return ordersRepository.findAllByCustomer_CustomerID(customerID);
     }
 
-    public Orders findByOrderID(Long orderID){
+    public Orders findByOrderID(Long orderID) {
         return ordersRepository.findByOrderID(orderID);
     }
 
-    public List<Orders> findAllOrders(){
+    public List<Orders> findAllOrders() {
         return ordersRepository.findAll();
     }
 
-    public List<OrderDTO> getOrdersDTORequiredResponseFormat(){
+    public List<OrderDTO> getOrdersDTORequiredResponseFormat() {
         Long customerID = 1L;
+
+        Customer customer = customerRepository.findByCustomerID(Long.valueOf(customerID));
+
+        if (customer == null) {
+            throw new ResponseStatusException(NOT_FOUND, "Unable to find id");
+        }
         List<Orders> ordersByCustomerID = findAllByCustomerID(customerID);
         List<OrderDTO> returnedOrdersDTO = new ArrayList<>();
 
-        for(Orders orders: ordersByCustomerID){
+        for (Orders orders : ordersByCustomerID) {
             OrderDTO orderDTO = new OrderDTO();
             orderDTO.setEventID(Long.valueOf(orders.getTicketCategory().getEvent().getEventID()));
             orderDTO.setTimestamp(orders.getOrderedAt());

@@ -1,5 +1,7 @@
 package com.endava.TicketManagement.Model;
+
 import jakarta.persistence.*;
+
 import java.util.Date;
 
 @Entity

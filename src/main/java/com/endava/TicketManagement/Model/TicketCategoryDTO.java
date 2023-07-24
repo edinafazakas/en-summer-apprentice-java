@@ -6,7 +6,7 @@ public class TicketCategoryDTO {
     private String description;
     private int price;
 
-    public TicketCategoryDTO(){
+    public TicketCategoryDTO() {
 
     }
 

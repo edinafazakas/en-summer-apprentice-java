@@ -32,21 +32,8 @@ public class EventServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    /*@Test
-    public void testCreateEvent() {
-        Event event = new Event();
-        event.setEventID(10);
-
-        when(eventRepository.save(event)).thenReturn(event);
-
-        Event createdEvent = eventService.create(event);
-
-        assertEquals(Optional.ofNullable(10L), Optional.ofNullable(createdEvent.getEventID()));
-        verify(eventRepository, times(1)).save(event);
-    }*/
-
     @Test
-    public void testFindAllEvents() {
+    public void findAllEvents() {
         List<Event> events = new ArrayList<>();
 
         when(eventRepository.findAll()).thenReturn(events);
@@ -58,7 +45,7 @@ public class EventServiceTest {
     }
 
     @Test
-    public void testFindEventById() {
+    public void findEventById() {
         Long eventID = 123L;
         Event event = new Event();
 

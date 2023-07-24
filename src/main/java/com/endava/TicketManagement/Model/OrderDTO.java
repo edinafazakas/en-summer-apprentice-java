@@ -10,7 +10,7 @@ public class OrderDTO {
     private Date timestamp;
     private int totalPrice;
 
-    public OrderDTO(){
+    public OrderDTO() {
 
     }
 

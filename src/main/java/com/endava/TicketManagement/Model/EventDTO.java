@@ -14,7 +14,7 @@ public class EventDTO {
     private Venue venues;
 
 
-    public EventDTO(){
+    public EventDTO() {
 
     }
 
