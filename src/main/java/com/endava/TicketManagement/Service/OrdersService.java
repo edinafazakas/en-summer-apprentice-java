@@ -4,9 +4,9 @@ import com.endava.TicketManagement.Model.Event;
 import com.endava.TicketManagement.Model.OrderDTO;
 import com.endava.TicketManagement.Model.Orders;
 import com.endava.TicketManagement.Model.TicketCategory;
-import com.endava.TicketManagement.Repository.EventRepository;
-import com.endava.TicketManagement.Repository.OrdersRepository;
-import com.endava.TicketManagement.Repository.TicketCategoryRepository;
+import com.endava.TicketManagement.OrdersRepositoryTesta.EventRepository;
+import com.endava.TicketManagement.OrdersRepositoryTesta.OrdersRepository;
+import com.endava.TicketManagement.OrdersRepositoryTesta.TicketCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
