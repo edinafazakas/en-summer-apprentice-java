@@ -36,8 +36,7 @@ public class OrdersController {
 
     @GetMapping("/ordersDTO")
     public List<OrderDTO> getOrdersDTORequiredResponseFormat(){
-        List<OrderDTO> returnedOrdersDTO = ordersService.getOrdersDTORequiredResponseFormat();
-        return returnedOrdersDTO;
+        return ordersService.getOrdersDTORequiredResponseFormat();
     }
 
     @PostMapping("/createOrder")
