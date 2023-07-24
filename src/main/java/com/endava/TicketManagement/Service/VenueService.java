@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class VenueService {
     @Autowired
-    private VenueRepository venueRepository;
+    VenueRepository venueRepository;
 
-    public Venue findByID(Integer venueID){
+    public Venue findByID(Long venueID) {
         return venueRepository.findByVenueID(venueID);
     }
+
 }
