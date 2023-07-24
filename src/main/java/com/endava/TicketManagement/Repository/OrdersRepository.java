@@ -1,4 +1,4 @@
-package com.endava.TicketManagement.OrdersRepositoryTesta;
+package com.endava.TicketManagement.Repository;
 
 import com.endava.TicketManagement.Model.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;

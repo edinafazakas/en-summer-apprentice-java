@@ -1,9 +1,8 @@
 package com.endava.TicketManagement.Service;
 
 import com.endava.TicketManagement.Model.Event;
-import com.endava.TicketManagement.Model.EventDTO;
-import com.endava.TicketManagement.OrdersRepositoryTesta.EventRepository;
-import com.endava.TicketManagement.OrdersRepositoryTesta.TicketCategoryRepository;
+import com.endava.TicketManagement.Repository.EventRepository;
+import com.endava.TicketManagement.Repository.TicketCategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

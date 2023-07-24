@@ -1,4 +1,4 @@
-package com.endava.TicketManagement.OrdersRepositoryTesta;
+package com.endava.TicketManagement.Repository;
 
 
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-public class RepositoryTest {
+public class OrderRepositoryTest {
 
     @Autowired
     private OrdersRepository ordersRepository;
