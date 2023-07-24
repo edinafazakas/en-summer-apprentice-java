@@ -10,6 +10,12 @@ public class TicketCategoryDTO {
 
     }
 
+    public TicketCategoryDTO(Integer ticketCategoryID, String description, int price) {
+        this.ticketCategoryID = ticketCategoryID;
+        this.description = description;
+        this.price = price;
+    }
+
     public Integer getTicketCategoryID() {
         return ticketCategoryID;
     }

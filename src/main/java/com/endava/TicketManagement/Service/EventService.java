@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -61,15 +62,9 @@ public class EventService {
             eventDTO.setEndDate(event.getEndDate());
 
             List<TicketCategory> ticketCategories = ticketCategoryRepository.findAllByEvent_EventID(Long.valueOf(event.getEventID()));
-            List<TicketCategoryDTO> ticketCategoryDTOS = new ArrayList<>();
-
-            for (TicketCategory ticketCategory : ticketCategories) {
-                TicketCategoryDTO ticketCategoryDTO = new TicketCategoryDTO();
-                ticketCategoryDTO.setTicketCategoryID(ticketCategory.getTicketCategoryID());
-                ticketCategoryDTO.setPrice(ticketCategory.getPrice());
-                ticketCategoryDTO.setDescription(ticketCategory.getDescription());
-                ticketCategoryDTOS.add(ticketCategoryDTO);
-            }
+            List<TicketCategoryDTO> ticketCategoryDTOS = ticketCategories.stream()
+                    .map(ticketCategory -> new TicketCategoryDTO(ticketCategory.getTicketCategoryID(), ticketCategory.getDescription(), ticketCategory.getPrice()))
+                    .collect(Collectors.toList());
 
             eventDTO.setTicketCategoryDTOS(ticketCategoryDTOS);
             returnedEventsDTO.add(eventDTO);
