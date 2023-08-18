@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class OrdersController {
     @Autowired
@@ -37,5 +38,15 @@ public class OrdersController {
     public OrderDTO createOrder(@RequestBody OrderDTO orderDTO) {
         orderDTO = ordersService.createOrder(orderDTO);
         return orderDTO;
+    }
+
+    @DeleteMapping("/deleteOrder/{resourceId}")
+    public void deleteOrder(@PathVariable Long resourceId) {
+        ordersService.deleteOrder(resourceId);
+    }
+
+    @PatchMapping("/updateOrder/{resourceId}")
+    public OrderDTOPatch updateOrder(@PathVariable Long resourceId, @RequestBody OrderDTOPatch updatedOrder) {
+        return ordersService.updateOrder(resourceId, updatedOrder);
     }
 }

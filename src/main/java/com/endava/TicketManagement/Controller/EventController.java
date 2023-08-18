@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+@CrossOrigin
 @RestController
 public class EventController {
     @Autowired
@@ -22,22 +23,35 @@ public class EventController {
     @Autowired
     protected EventTypeService eventTypeService;
 
-
     @GetMapping("/event/{resourceId}")
     public Optional<Event> getEvents(@PathVariable Long resourceId) {
         return eventService.findEvent(resourceId);
     }
 
+    //@CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/events")
     public List<Event> getEvents() {
         return eventService.findAll();
+    }
+
+
+    @GetMapping("/getEvents")
+    public List<EventRequestDto> getEventsRequest() throws Exception {
+        return eventService.getEvents();
     }
 
     @GetMapping("/eventsByVenueIDAndEventType")
     public List<Event> getEventsByVenueIDAndEventType(
             @RequestParam("venueID") Integer venueID,
             @RequestParam("eventType") String eventType) {
-        return eventService.findAllByVenueIDAndEventType(eventType, venueID);
+        return eventService.findAllByVenueIDAndEventType1(eventType, venueID);
+    }
+
+    @GetMapping("/eventsByVenueLocationAndEventType")
+    public List<EventRequestDto> getEventsByVenueLocationAndEventType(
+            @RequestParam("eventType") String eventType,
+            @RequestParam("venue") String venue) {
+        return eventService.findAllByVenueIDAndEventType2(eventType, venue);
     }
 
     @GetMapping("/eventsByVenueIDAndEventTypeDTO")

@@ -17,6 +17,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 public class OrdersService {
+    private static int orderID = 28;
     @Autowired
     private OrdersRepository ordersRepository;
     @Autowired
@@ -68,7 +69,7 @@ public class OrdersService {
 
     public OrderDTO createOrder(OrderDTO orderDTO) {
         Orders orders = new Orders();
-        orders.setOrderID(12);
+        orders.setOrderID(orderID++);
 
         TicketCategory ticketCategory = ticketCategoryRepository.findByTicketCategoryID(orderDTO.getTicketCategoryID());
         Event event = eventRepository.findByEventID(orderDTO.getEventID());
@@ -84,5 +85,33 @@ public class OrdersService {
         orderDTO.setTimestamp(java.sql.Date.valueOf(LocalDate.now()));
         orderDTO.setTotalPrice(totalPrice);
         return orderDTO;
+    }
+
+    public void deleteOrder(Long orderID) {
+        Orders orderToDelete = ordersRepository.findByOrderID(orderID);
+
+        if (orderToDelete == null) {
+            throw new ResponseStatusException(NOT_FOUND, "Order not found");
+        }
+
+        ordersRepository.delete(orderToDelete);
+    }
+
+    public OrderDTOPatch updateOrder(Long id, OrderDTOPatch updatedOrder) {
+        Orders existingOrder = ordersRepository.findByOrderID(id);
+
+        if (existingOrder == null) {
+            throw new ResponseStatusException(NOT_FOUND, "Order not found");
+        }
+
+        existingOrder.setNumberOfTickets(updatedOrder.getNumberOfTickets());
+        TicketCategory ticketCategory = ticketCategoryRepository.findByTicketCategoryID((long) updatedOrder.getTicketCategoryID());
+
+        int totalPrice = updatedOrder.getNumberOfTickets() * ticketCategory.getPrice();
+        existingOrder.setTotalPrice(totalPrice);
+        existingOrder.setTicketCategory(ticketCategory);
+        ordersRepository.save(existingOrder);
+
+        return updatedOrder;
     }
 }

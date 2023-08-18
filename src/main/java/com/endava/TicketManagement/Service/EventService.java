@@ -38,8 +38,30 @@ public class EventService {
         return eventRepository.findById(eventID);
     }
 
-    public List<Event> findAllByVenueIDAndEventType(String eventTypeName, Integer venueID) {
+    public List<Event> findAllByVenueIDAndEventType1(String eventTypeName, Integer venueID) {
         return eventRepository.findAllByEventType_NameAndVenue_VenueID(eventTypeName, venueID);
+    }
+
+    public List<EventRequestDto> findAllByVenueIDAndEventType2(String eventTypeName, String venue) {
+//        for(Event e: eventRepository.findAllByEventType_NameAndVenue_Location("Festival Muzica", "Aleea Stadionului 2, Cluj-Napoca")){
+//            System.out.println(e.toString());
+//        }
+
+        List<EventRequestDto> eventDTOS = new ArrayList<>();
+        List<Event> events = eventRepository.findAllByEventType_NameAndVenue_Location(eventTypeName, venue);
+        for(Event e: events){
+            EventRequestDto eventDTO = new EventRequestDto();
+            eventDTO.setEventID(e.getEventID());
+            eventDTO.setTicketCategoriest(ticketCategoryRepository.findAllByEvent_EventID(Long.valueOf(e.getEventID())));
+            eventDTO.setName(e.getName());
+            eventDTO.setVenue(e.getVenue());
+            eventDTO.setEndDate(e.getEndDate());
+            eventDTO.setStartDate(e.getStartDate());
+            eventDTO.setEventType(e.getEventType());
+            eventDTO.setDescription(e.getDescription());
+            eventDTOS.add(eventDTO);
+        }
+        return eventDTOS;
     }
 
     public Event findByEventID(Long eventID) {
@@ -48,7 +70,7 @@ public class EventService {
 
     public List<EventDTO> getEventsByVenueIDAndEventTypeDTORequiredResponseFormat(Integer venueID, String eventType) throws Exception {
 
-        List<Event> events = findAllByVenueIDAndEventType(eventType, venueID);
+        List<Event> events = findAllByVenueIDAndEventType1(eventType, venueID);
         List<EventDTO> returnedEventsDTO = new ArrayList<>();
 
         for (Event event : events) {
@@ -70,6 +92,29 @@ public class EventService {
             returnedEventsDTO.add(eventDTO);
         }
         return returnedEventsDTO;
+    }
+
+    public List<EventRequestDto> getEvents() throws Exception {
+
+        List<EventRequestDto> eventDTOS = new ArrayList<>();
+        List<Event> events = (List<Event>) eventRepository.findAll();
+
+        for (Event event : events) {
+            EventRequestDto eventDTO = new EventRequestDto();
+            eventDTO.setEventType(event.getEventType());
+            eventDTO.setVenue(event.getVenue());
+            eventDTO.setDescription(event.getDescription());
+            eventDTO.setName(event.getName());
+            eventDTO.setStartDate(event.getStartDate());
+            eventDTO.setEndDate(event.getEndDate());
+            eventDTO.setEventID(event.getEventID());
+
+            List<TicketCategory> ticketCategories = ticketCategoryRepository.findAll();
+
+            eventDTO.setTicketCategoriest(ticketCategories);
+            eventDTOS.add(eventDTO);
+        }
+        return eventDTOS;
     }
 
 }

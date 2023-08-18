@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface EventRepository extends CrudRepository<Event, Long> {
     List<Event> findAllByEventType_NameAndVenue_VenueID(String eventTypeName, Integer venue_venueID);
+    List<Event> findAllByEventType_NameAndVenue_Location(String eventType, String venue);
 
     Event findByEventID(Long eventID);
 
